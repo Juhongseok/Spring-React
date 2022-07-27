@@ -1,9 +1,9 @@
 package com.jhs.manager.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.domain.Persistable;
 
 import javax.persistence.*;
@@ -15,6 +15,7 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @NoArgsConstructor
+@DynamicUpdate
 public class Member implements Persistable<String> {
 
     @Id
@@ -55,8 +56,8 @@ public class Member implements Persistable<String> {
 
     public void setTeam(Team team){
         if (this.team == null) {
-            this.team = team;
             team.getMembers().add(this);
         }
+        this.team = team;
     }
 }
