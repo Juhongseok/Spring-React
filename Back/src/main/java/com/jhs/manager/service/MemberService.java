@@ -33,9 +33,6 @@ public class MemberService {
                 .password(request.getPassword())
                 .age(request.getAge())
                 .salary(1_000_000)
-                .team(Team.builder()
-                        .name("No Team")
-                        .build())
                 .build();
         memberRepository.save(newMember);
         return "ok";
