@@ -24,6 +24,7 @@ public class MemberController {
      * @param request
      * @return
      */
+    @CrossOrigin
     @PostMapping("/member")
     public String signUp(@Validated @RequestBody SaveMemberRequest request) {
         return memberService.saveMember(request);
