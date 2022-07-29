@@ -1,9 +1,7 @@
 package com.jhs.manager.service;
 
 import com.jhs.manager.domain.Member;
-import com.jhs.manager.domain.Team;
 import com.jhs.manager.repository.MemberRepository;
-import com.jhs.manager.repository.TeamRepository;
 import com.jhs.manager.service.request.LoginMemberRequest;
 import com.jhs.manager.service.request.SaveMemberRequest;
 import com.jhs.manager.service.request.UpdateMemberRequest;
@@ -31,9 +29,6 @@ class MemberServiceTest {
 
     @Mock
     MemberRepository memberRepository;
-
-    @Mock
-    TeamRepository teamRepository;
 
     @InjectMocks
     MemberService memberService;
@@ -112,7 +107,6 @@ class MemberServiceTest {
                 .password("userA")
                 .age(10)
                 .salary(1000)
-                .team(Team.builder().name("TeamA").build())
                 .build();
         given(memberRepository.findById(any())).willReturn(Optional.of(member));
 
@@ -153,18 +147,15 @@ class MemberServiceTest {
                 .password("userA")
                 .age(10)
                 .salary(1000)
-                .team(new Team(1L, "teamA"))
                 .build();
 
         given(memberRepository.findById(any())).willReturn(Optional.ofNullable(member));
-        given(teamRepository.findById(any())).willReturn(Optional.of(new Team(1L, "teamA")));
 
         //when
-        memberService.updateMember(new UpdateMemberRequest(member.getId(), member.getSalary(), 2L));
+        memberService.updateMember(new UpdateMemberRequest(member.getId(), member.getSalary()));
 
         //then
         verify(memberRepository, times(1)).findById(member.getId());
-        verify(teamRepository, times(1)).findById(2L);
     }
 
     @Test

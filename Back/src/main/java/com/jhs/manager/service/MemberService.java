@@ -1,11 +1,8 @@
 package com.jhs.manager.service;
 
-import com.jhs.manager.service.response.TeamInfo;
 import com.jhs.manager.service.response.UpdateMemberForm;
 import com.jhs.manager.domain.Member;
-import com.jhs.manager.domain.Team;
 import com.jhs.manager.repository.MemberRepository;
-import com.jhs.manager.repository.TeamRepository;
 import com.jhs.manager.service.request.LoginMemberRequest;
 import com.jhs.manager.service.request.SaveMemberRequest;
 import com.jhs.manager.service.request.UpdateMemberRequest;
@@ -24,7 +21,6 @@ import java.util.stream.Collectors;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final TeamRepository teamRepository;
 
     public String saveMember(SaveMemberRequest request) {
         Member newMember = Member.builder()
@@ -51,18 +47,12 @@ public class MemberService {
     public UpdateMemberForm getUpdateMemberInfo(String memberId) {
         Member member = findMember(memberId);
 
-        List<TeamInfo> teamInfoList = teamRepository.findAll().stream()
-                .map(team -> new TeamInfo(team.getId(), team.getName()))
-                .collect(Collectors.toList());
-        return new UpdateMemberForm(member.getId(), member.getSalary(), teamInfoList);
+        return new UpdateMemberForm(member.getId(), member.getSalary());
     }
 
     public void updateMember(UpdateMemberRequest request) {
         Member findMember = findMember(request.getId());
         findMember.changeSalary(request.getSalary());
-
-        Team team = teamRepository.findById(request.getTeamId()).get();
-        findMember.setTeam(team);
     }
 
     public void deleteMember(String id) {
@@ -78,7 +68,6 @@ public class MemberService {
                 .age(findMember.getAge())
                 .password(findMember.getPassword())
                 .salary(findMember.getSalary())
-                .teamName(findMember.getTeam().getName())
                 .build();
     }
 
@@ -91,7 +80,6 @@ public class MemberService {
                         .age(m.getAge())
                         .password(m.getPassword())
                         .salary(m.getSalary())
-                        .teamName(m.getTeam().getName())
                         .build())
                 .collect(Collectors.<MemberInfoResponse>toList());
     }

@@ -13,5 +13,4 @@ public class MemberInfoResponse {
     private String password;
     private int age;
     private int salary;
-    private String teamName;
 }

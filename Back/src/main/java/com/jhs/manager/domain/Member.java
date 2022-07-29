@@ -26,18 +26,13 @@ public class Member implements Persistable<String> {
     private int salary;
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name="TEAM_ID")
-    private Team team;
-
     @Builder
-    public Member(String id, String name, String password, int age, int salary, Team team) {
+    public Member(String id, String name, String password, int age, int salary) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.age = age;
         this.salary = salary;
-        this.team = team;
     }
 
     @Override
@@ -54,10 +49,4 @@ public class Member implements Persistable<String> {
         this.salary = salary;
     }
 
-    public void setTeam(Team team){
-        if (this.team == null) {
-            team.getMembers().add(this);
-        }
-        this.team = team;
-    }
 }

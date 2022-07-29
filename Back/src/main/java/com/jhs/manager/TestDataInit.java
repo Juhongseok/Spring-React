@@ -1,8 +1,8 @@
 package com.jhs.manager;
 
 import com.jhs.manager.domain.Member;
-import com.jhs.manager.domain.Team;
-import com.jhs.manager.repository.TeamRepository;
+import com.jhs.manager.repository.MemberRepository;
+import com.jhs.manager.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,13 +12,9 @@ import javax.annotation.PostConstruct;
 @RequiredArgsConstructor
 public class TestDataInit {
 
-    private final TeamRepository teamRepository;
-
+    private final MemberRepository memberRepository;
     @PostConstruct
     public void init(){
-        Team teamA = Team.builder().name("teamA").build();
-        Team teamB = Team.builder().name("teamB").build();
-
         for (int i = 0; i < 10; i++) {
             Member member = Member.builder()
                     .id("member"+i+"@naver.com")
@@ -27,10 +23,8 @@ public class TestDataInit {
                     .age(20+i)
                     .salary(1000000)
                     .build();
-            member.setTeam(i%2 == 0 ? teamA : teamB);
+            memberRepository.save(member);
         }
 
-        teamRepository.save(teamA);
-        teamRepository.save(teamB);
     }
 }

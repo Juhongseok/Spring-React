@@ -15,6 +15,4 @@ public class UpdateMemberRequest {
     private String id;
     @NotNull(message = "{NotNull.UpdateMemberRequest.salary}")
     private Integer salary;
-    @NotNull(message = "{NotNull.UpdateMemberRequest.teamId}")
-    private Long teamId;
 }

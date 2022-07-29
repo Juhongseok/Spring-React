@@ -7,7 +7,6 @@ import com.jhs.manager.service.request.SaveMemberRequest;
 import com.jhs.manager.service.request.UpdateMemberRequest;
 import com.jhs.manager.service.response.LoginMemberResponse;
 import com.jhs.manager.service.response.MemberInfoResponse;
-import com.jhs.manager.service.response.TeamInfo;
 import com.jhs.manager.service.response.UpdateMemberForm;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,13 +16,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import java.util.List;
-
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MemberController.class)
@@ -128,7 +124,6 @@ class MemberControllerTest {
                 .password("memberA")
                 .age(10)
                 .salary(100)
-                .teamName("teamA")
                 .build();
         given(memberService.getMemberInfo("memberA@naver.com")).willReturn(response);
 
@@ -179,7 +174,7 @@ class MemberControllerTest {
     void updateMemberForm() throws Exception {
         //given
         String memberId = "member1@naver.com";
-        UpdateMemberForm updateMemberForm = new UpdateMemberForm(memberId, 1000, List.of(new TeamInfo(1L, "team1")));
+        UpdateMemberForm updateMemberForm = new UpdateMemberForm(memberId, 1000);
         given(memberService.getUpdateMemberInfo(memberId)).willReturn(updateMemberForm);
 
         //when
@@ -212,7 +207,7 @@ class MemberControllerTest {
         //given
         String memberId = "member1@naver.com";
 
-        UpdateMemberRequest request = new UpdateMemberRequest(memberId, 1000000, 2L);
+        UpdateMemberRequest request = new UpdateMemberRequest(memberId, 1000000);
         String content = objectMapper.writeValueAsString(request);
 
         willDoNothing().given(memberService).updateMember(request);

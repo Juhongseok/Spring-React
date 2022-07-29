@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 public class MemberController {
@@ -24,7 +25,6 @@ public class MemberController {
      * @param request
      * @return
      */
-    @CrossOrigin
     @PostMapping("/member")
     public String signUp(@Validated @RequestBody SaveMemberRequest request) {
         return memberService.saveMember(request);
