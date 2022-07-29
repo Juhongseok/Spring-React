@@ -33,10 +33,12 @@ export default class AddMember extends Component {
         }
         ApiService.addMember(member)
             .then(res => {
-                this.setState({
-                    message: member.memberName + '님이 등록되었습니다'
-                })
-                console.log(this.state.message);
+                if(res.data.message === 'success'){
+                    this.setState({
+                        message: member.name + '님이 등록되었습니다',
+                    })
+                    console.log(this.state.message);
+                }
             })
             .catch(error => {
                 console.log('addMember() Error', error);

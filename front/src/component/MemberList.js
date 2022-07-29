@@ -20,7 +20,7 @@ export default class MemberList extends Component {
         ApiService.fetchMembers()
             .then(res=>{
                 this.setState({
-                    members: res.data
+                    members: res.data.data
                 })
             })
             .catch(error => {
@@ -56,28 +56,29 @@ export default class MemberList extends Component {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell align='right'>Id</TableCell>
-                            <TableCell align='right'>NAME</TableCell>
-                            <TableCell align='right'>PASSWORD</TableCell>
-                            <TableCell align='right'>AGE</TableCell>
-                            <TableCell align='right'>SALARY</TableCell>
+                            <TableCell align='center'>ID</TableCell>
+                            <TableCell align='center'>NAME</TableCell>
+                            <TableCell align='center'>PASSWORD</TableCell>
+                            <TableCell align='center'>AGE</TableCell>
+                            <TableCell align='center'>SALARY</TableCell>
+                            <TableCell >BUTTON</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.members.map(member => 
                             <TableRow component='th' scope='member' key={member.memberId}>
-                                <TableCell align='right'>{member.memberId}</TableCell>
-                                <TableCell align='right'>{member.memberName}</TableCell>
-                                <TableCell align='right'>{member.password}</TableCell>
-                                <TableCell align='right'>{member.age}</TableCell>
-                                <TableCell align='right'>{member.salary}</TableCell>
-                                <TableCell align='right'>
-                                    <TableCell align='right' onClick={() => this.editMember(member.memberId)}>
-                                        create
-                                    </TableCell>
-                                    <TableCell align='right' onClick={() => this.deleteMember(member.memberId)}>
+                                <TableCell align='center'>{member.memberId}</TableCell>
+                                <TableCell align='center'>{member.memberName}</TableCell>
+                                <TableCell align='center'>{member.password}</TableCell>
+                                <TableCell align='center'>{member.age}</TableCell>
+                                <TableCell align='center'>{member.salary}</TableCell>
+                                <TableCell align='center'>
+                                    <Button align='right' onClick={() => this.editMember(member.memberId)}>
+                                        update
+                                    </Button>
+                                    <Button align='right' onClick={() => this.deleteMember(member.memberId)}>
                                         delete
-                                    </TableCell>
+                                    </Button>
                                 </TableCell>
                             </TableRow>
                             )

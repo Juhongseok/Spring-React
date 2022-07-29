@@ -44,7 +44,7 @@ export default class EditMember extends Component {
         e.preventDefault();
 
         let member = {
-            memberId:this.state.memberId,
+            id:this.state.memberId,
             salary:this.state.salary
         }
 
