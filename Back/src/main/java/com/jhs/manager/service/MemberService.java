@@ -1,10 +1,12 @@
 package com.jhs.manager.service;
 
+import com.jhs.manager.controller.response.error.ErrorCode;
 import com.jhs.manager.domain.Member;
 import com.jhs.manager.repository.MemberRepository;
 import com.jhs.manager.service.request.SaveMemberRequest;
 import com.jhs.manager.service.request.UpdateMemberRequest;
 import com.jhs.manager.service.response.MemberInfoResponse;
+import com.jhs.manager.service.response.exception.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -67,6 +69,6 @@ public class MemberService {
 
     private Member findMember(String id) {
         return memberRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("유저 정보 없음"));
+                .orElseThrow(() -> new EntityNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
     }
 }
