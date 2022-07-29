@@ -34,16 +34,6 @@ public class MemberService {
         return "ok";
     }
 
-    @Transactional(readOnly = true)
-    public LoginMemberResponse login(LoginMemberRequest request) {
-        if (request.getId().equals("admin")) {
-            return getLoginMemberResponse(request.getPassword(), "1234", "admin", "ADMIN");
-        }
-
-        Member loginMember = findMember(request.getId());
-        return getLoginMemberResponse(loginMember.getPassword(), request.getPassword(), loginMember.getName(), "user");
-    }
-
     public UpdateMemberForm getUpdateMemberInfo(String memberId) {
         Member member = findMember(memberId);
 
@@ -82,13 +72,6 @@ public class MemberService {
                         .salary(m.getSalary())
                         .build())
                 .collect(Collectors.<MemberInfoResponse>toList());
-    }
-
-    private LoginMemberResponse getLoginMemberResponse(String password, String findPassword, String name, String role) {
-        if (password.equals(findPassword)) {
-            return new LoginMemberResponse(name, role);
-        }
-        throw new IllegalArgumentException("비밀번호 오류");
     }
 
     private Member findMember(String id) {

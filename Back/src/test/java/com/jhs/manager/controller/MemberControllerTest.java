@@ -34,7 +34,7 @@ class MemberControllerTest {
     ObjectMapper objectMapper;
 
     @Test
-    @DisplayName("signUp - Post /member")
+    @DisplayName("add - Post /member")
     void signUp() throws Exception {
         //given
         SaveMemberRequest request = new SaveMemberRequest("memberA", "memberA", "memberA!", 10);
@@ -50,68 +50,6 @@ class MemberControllerTest {
         //then
         action.andExpect(status().isOk())
                 .andExpect(content().string("ok"));
-    }
-
-    @Test
-    @DisplayName("login - Get /member/login")
-    void login() throws Exception {
-        //given
-        LoginMemberRequest request = new LoginMemberRequest("memberA", "memberA");
-
-        LoginMemberResponse response = new LoginMemberResponse("memberA", "user");
-        given(memberService.login(request)).willReturn(response);
-        String data = objectMapper.writeValueAsString(request);
-        String responseValue = objectMapper.writeValueAsString(response);
-
-        //when
-        ResultActions action = mock.perform(get("/member/login")
-                .content(data)
-                .contentType(APPLICATION_JSON));
-
-        //then
-        action.andExpect(status().isOk())
-                .andExpect(content().json(responseValue));
-    }
-
-    @Test
-    @DisplayName("login - Get /member/login")
-    void login_admin() throws Exception {
-        //given
-        LoginMemberRequest request = new LoginMemberRequest("admin", "1234");
-
-        LoginMemberResponse response = new LoginMemberResponse("admin", "ADMIN");
-        given(memberService.login(request)).willReturn(response);
-        String data = objectMapper.writeValueAsString(request);
-        String responseValue = objectMapper.writeValueAsString(response);
-
-        //when
-        ResultActions action = mock.perform(get("/member/login")
-                .content(data)
-                .contentType(APPLICATION_JSON));
-
-        //then
-        action.andExpect(status().isOk())
-                .andExpect(content().json(responseValue))
-                .andExpect(jsonPath("$.name", "admin").exists());
-    }
-
-    @Test
-    @DisplayName("login error - Get /member/login")
-    void login_error() throws Exception {
-        //given
-        LoginMemberRequest request = new LoginMemberRequest(null, null);
-
-        String data = objectMapper.writeValueAsString(request);
-
-        //when
-        ResultActions action = mock.perform(get("/member/login")
-                .content(data)
-                .contentType(APPLICATION_JSON));
-
-        //then
-        action.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.id", is("아이디를 입력하세요")))
-                .andExpect(jsonPath("$.password", is("비밀번호를 입력하세요")));
     }
 
     @Test

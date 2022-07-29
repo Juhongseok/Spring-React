@@ -44,59 +44,6 @@ class MemberServiceTest {
         //then
         assertThat(returnValue).isEqualTo("ok");
     }
-    
-    @Test
-    void login_user(){
-        //given
-        Member member = Member.builder()
-                .id("userA")
-                .name("userA")
-                .password("userA")
-                .age(10)
-                .salary(1000)
-                .build();
-        LoginMemberRequest request = new LoginMemberRequest(member.getId(), member.getPassword());
-        given(memberRepository.findById(any())).willReturn(Optional.of(member));
-
-        //when
-        LoginMemberResponse login = memberService.login(request);
-
-        //then
-        assertThat(login.getName()).isEqualTo(member.getName());
-        assertThat(login.getRole()).isEqualTo("user");
-    }
-
-    @Test
-    void login_error(){
-        //given
-        Member member = Member.builder()
-                .id("userA")
-                .name("userA")
-                .password("userA")
-                .age(10)
-                .salary(1000)
-                .build();
-        LoginMemberRequest request = new LoginMemberRequest(member.getId(), member.getPassword());
-        given(memberRepository.findById(any())).willThrow(new IllegalArgumentException("유저 정보 없음"));
-
-        //when
-        //then
-        assertThatThrownBy(() -> memberService.login(request))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @Test
-    void login_admin(){
-        //given
-        LoginMemberRequest request = new LoginMemberRequest("admin", "1234");
-
-        //when
-        LoginMemberResponse login = memberService.login(request);
-
-        //then
-        assertThat(login.getName()).isEqualTo("admin");
-        assertThat(login.getRole()).isEqualTo("ADMIN");
-    }
 
     @Test
     void getMemberInfo(){

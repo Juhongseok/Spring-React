@@ -21,23 +21,13 @@ public class MemberController {
     private final MemberService memberService;
 
     /**
-     * 회원가입
+     * 멤버 추가
      * @param request
      * @return
      */
     @PostMapping("/member")
-    public String signUp(@Validated @RequestBody SaveMemberRequest request) {
+    public String addMember(@Validated @RequestBody SaveMemberRequest request) {
         return memberService.saveMember(request);
-    }
-
-    /**
-     * 로그인
-     * @param request
-     * @return
-     */
-    @GetMapping("/member/login")
-    public LoginMemberResponse login(@Validated @RequestBody LoginMemberRequest request){
-        return memberService.login(request);
     }
 
     /**
