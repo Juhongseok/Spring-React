@@ -1,11 +1,8 @@
 package com.jhs.manager.controller;
 
-import com.jhs.manager.service.response.UpdateMemberForm;
 import com.jhs.manager.service.MemberService;
-import com.jhs.manager.service.request.LoginMemberRequest;
 import com.jhs.manager.service.request.SaveMemberRequest;
 import com.jhs.manager.service.request.UpdateMemberRequest;
-import com.jhs.manager.service.response.LoginMemberResponse;
 import com.jhs.manager.service.response.MemberInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -58,16 +55,6 @@ public class MemberController {
     public String deleteMember(@PathVariable("memberId") String memberId){
         memberService.deleteMember(memberId);
         return "ok";
-    }
-
-    /**
-     * 멤버 업데이트 폼 조회시 정보
-     * @param memberId
-     * @return
-     */
-    @GetMapping("/member/{memberId}/update")
-    public UpdateMemberForm updateMemberForm(@PathVariable("memberId") String memberId) {
-        return memberService.getUpdateMemberInfo(memberId);
     }
 
     /**

@@ -2,12 +2,9 @@ package com.jhs.manager.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jhs.manager.service.MemberService;
-import com.jhs.manager.service.request.LoginMemberRequest;
 import com.jhs.manager.service.request.SaveMemberRequest;
 import com.jhs.manager.service.request.UpdateMemberRequest;
-import com.jhs.manager.service.response.LoginMemberResponse;
 import com.jhs.manager.service.response.MemberInfoResponse;
-import com.jhs.manager.service.response.UpdateMemberForm;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,38 +98,6 @@ class MemberControllerTest {
 
         //when
         ResultActions action = mock.perform(delete("/member/{memberId}", pathVariable));
-
-        //then
-        action.andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.error", is("유저 정보 없음")));
-    }
-
-    @Test
-    @DisplayName("updateMemberForm - Get /member/{memberId}/update")
-    void updateMemberForm() throws Exception {
-        //given
-        String memberId = "member1@naver.com";
-        UpdateMemberForm updateMemberForm = new UpdateMemberForm(memberId, 1000);
-        given(memberService.getUpdateMemberInfo(memberId)).willReturn(updateMemberForm);
-
-        //when
-        ResultActions action = mock.perform(get("/member/{memberId}/update", memberId));
-
-        //then
-        action.andExpect(status().isOk())
-                .andExpect(content().json(objectMapper.writeValueAsString(updateMemberForm)))
-                .andExpect(jsonPath("$.memberId", is(memberId)));
-    }
-
-    @Test
-    @DisplayName("updateMemberForm_error - Get /member/{memberId}/update")
-    void updateMemberForm_error() throws Exception {
-        //given
-        String memberId = "asdf";
-        given(memberService.getUpdateMemberInfo(memberId)).willThrow(new IllegalArgumentException("유저 정보 없음"));
-
-        //when
-        ResultActions action = mock.perform(get("/member/{memberId}/update", memberId));
 
         //then
         action.andExpect(status().isBadRequest())

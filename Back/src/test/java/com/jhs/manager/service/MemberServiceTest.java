@@ -2,10 +2,8 @@ package com.jhs.manager.service;
 
 import com.jhs.manager.domain.Member;
 import com.jhs.manager.repository.MemberRepository;
-import com.jhs.manager.service.request.LoginMemberRequest;
 import com.jhs.manager.service.request.SaveMemberRequest;
 import com.jhs.manager.service.request.UpdateMemberRequest;
-import com.jhs.manager.service.response.LoginMemberResponse;
 import com.jhs.manager.service.response.MemberInfoResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,12 +1,9 @@
 package com.jhs.manager.service;
 
-import com.jhs.manager.service.response.UpdateMemberForm;
 import com.jhs.manager.domain.Member;
 import com.jhs.manager.repository.MemberRepository;
-import com.jhs.manager.service.request.LoginMemberRequest;
 import com.jhs.manager.service.request.SaveMemberRequest;
 import com.jhs.manager.service.request.UpdateMemberRequest;
-import com.jhs.manager.service.response.LoginMemberResponse;
 import com.jhs.manager.service.response.MemberInfoResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -32,12 +29,6 @@ public class MemberService {
                 .build();
         memberRepository.save(newMember);
         return "ok";
-    }
-
-    public UpdateMemberForm getUpdateMemberInfo(String memberId) {
-        Member member = findMember(memberId);
-
-        return new UpdateMemberForm(member.getId(), member.getSalary());
     }
 
     public void updateMember(UpdateMemberRequest request) {
