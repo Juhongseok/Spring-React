@@ -1,25 +1,30 @@
-import DefaultHeader from './DefaultHeader.js';
-import LoginHeader from './LoginHeader.js';
-import './App.css';
 import React from 'react';
-
-function App() {
-  var [login, setLogin] = React.useState(false);
-
-  if(login){
-    return (
-      <div className="App">
-          <LoginHeader/>
-      </div>
-    );
-  }else{
-    return (
-      <div className="App">
-          <DefaultHeader/>
-      </div>
-    );
-  }
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import MemberList from "./component/MemberList.js";
+import AddMember from "./component/AddMember.js";
+import EditMember from "./component/EditMember.js";
+import NavBar from "./component/NavBar.js"
+import Container from '@material-ui/core/Container'
   
+function App() {
+  return (
+    <div style={style}>
+      <NavBar/>
+      <Container>
+        <BrowserRouter>
+          <Routes>
+            <Route exact path='/' element={<MemberList/>}/>
+            <Route exact path='/members' element={<MemberList/>}/>
+            <Route exact path='/add-member' element={<AddMember/>}/>
+            <Route exact path='/edit-member/:memberId' element={<EditMember/>}/>
+          </Routes>
+        </BrowserRouter>
+      </Container>
+    </div>
+  );
 }
 
+const style = {
+  marginTop: '20px'
+}
 export default App;
