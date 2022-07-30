@@ -21,11 +21,12 @@ export default class EditMember extends Component {
     loadMember = () => {
         ApiService.fetchMemberById(window.localStorage.getItem('memberId'))
             .then(res => {
-                let member = res.data;
+                let member = res.data.data;
                 this.setState({
                     memberId:member.memberId,
                     salary:member.salary
                 })
+                window.localStorage.removeItem('membeRId')
             })
             .catch(error => {
                 console.log('loadMember() Error', error);
@@ -43,15 +44,15 @@ export default class EditMember extends Component {
     updateMember = (e) => {
         e.preventDefault();
 
-        let member = {
+        let updateMember = {
             id:this.state.memberId,
-            salary:this.state.salary
+            salary:Number(this.state.salary)
         }
 
-        ApiService.updateMember(member)
+        ApiService.updateMember(updateMember)
             .then(res => {
                 this.setState({
-                    message : member.Id + '님 정보가 수정되었습니다.'
+                    message : updateMember.id + '님 정보가 수정되었습니다.'
                 })
             })
             .catch(error => {

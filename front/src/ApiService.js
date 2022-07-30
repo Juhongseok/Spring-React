@@ -20,7 +20,7 @@ class ApiService {
     }
 
     updateMember(member){
-        return axios.patch(BASE_URL + 'member/' + member.memberId, member);
+        return axios.patch(BASE_URL + 'member/' + member.id, member);
     }
 }
 
