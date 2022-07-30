@@ -1,79 +1,72 @@
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 import ApiService from '../ApiService';
 
 import {TextField, Button, Typography} from '@material-ui/core'
 
-export default class EditMember extends Component {
-    constructor(props){
-        super(props);
+export default function EditMember() {
+    const navigate = useNavigate()
+    const [memberId, setMemberId] = useState(window.location.pathname.split('/')[2])
+    const [salary, setSalary] = useState('');
+    const [message, setMessage] = useState('')
 
-        this.state = {
-            memberId:'',
-            salary:'',
-            message:null
-        }
-    }
+    useEffect(() => loadMember, []);
 
-    componentDidMount(){
-        this.loadMember();
-    }
-
-    loadMember = () => {
-        ApiService.fetchMemberById(window.localStorage.getItem('memberId'))
+    const loadMember = () => {
+        ApiService.fetchMemberById(memberId)
             .then(res => {
-                let member = res.data;
-                this.setState({
-                    memberId:member.memberId,
-                    salary:member.salary
-                })
+                let member = res.data.data;
+
+                setMemberId(member.memberId);
+                setSalary(member.salary);
             })
             .catch(error => {
                 console.log('loadMember() Error', error);
             })
-            
-            
     }
 
-    onChange = (e) => {
-        this.setState({
-            [e.target.name] : e.target.value
-        })
+    const onMemberIdChange = (e) => {
+        setMemberId(e.target.value);
     }
 
-    updateMember = (e) => {
+    const onSalaryChange = (e) => {
+        setSalary(e.target.value);
+    }
+
+    const updateMember = (e) => {
         e.preventDefault();
 
         let member = {
-            id:this.state.memberId,
-            salary:this.state.salary
+            id:memberId,
+            salary:salary
         }
 
         ApiService.updateMember(member)
             .then(res => {
-                this.setState({
-                    message : member.Id + '님 정보가 수정되었습니다.'
-                })
+                setMessage(member.memberId + '님 정보가 수정되었습니다.')
+                console.log(message)
             })
             .catch(error => {
                 console.log('updateMember() Error', error);
             })
+
+        navigate('/')
     }
 
-  render() {
     return (
-      <div>
-        <Typography variant='h4' style={style}>Edit Member</Typography>
-        <form>
-            <TextField type="text" placeholder='input Id' name='memberId'
-                fullWidth value={this.state.memberId} onChange={this.onChange}/>
-            <TextField type="number" placeholder='input salary' name='salary'
-                fullWidth value={this.state.salary} onChange={this.onChange}/>
-            <Button variant='contained' color='primary' onClick={this.updateMember}>UPDATE</Button> 
-        </form>
-      </div>
+        <div>
+            <Typography variant='h4' style={style}>Edit Member</Typography>
+            <form>
+                <TextField type="text" placeholder='input Id' name='memberId'
+                    fullWidth value={memberId} onChange={onMemberIdChange}/>
+                <TextField type="number" placeholder='input salary' name='salary'
+                    fullWidth value={salary} onChange={onSalaryChange}/>
+                <Button variant='contained' color='primary' onClick={updateMember}>UPDATE</Button> 
+            </form>
+        </div>
     )
-  }
 }
+
 
 const style={
     display: 'flex',

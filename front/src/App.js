@@ -1,11 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import MemberList from "./component/MemberList.js";
 import AddMember from "./component/AddMember.js";
 import EditMember from "./component/EditMember.js";
 import NavBar from "./component/NavBar.js"
 import Container from '@material-ui/core/Container'
-  
+import MemberList from './component/MemberList.js';
+
 function App() {
   return (
     <div style={style}>
