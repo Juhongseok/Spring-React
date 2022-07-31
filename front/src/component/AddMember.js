@@ -1,4 +1,4 @@
-import React, { Component, useState } from 'react'
+import React, { useState } from 'react'
 import ApiService from '../ApiService'
 
 import {TextField, Button, Typography} from '@material-ui/core'

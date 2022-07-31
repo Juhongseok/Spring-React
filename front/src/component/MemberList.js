@@ -37,12 +37,14 @@ export default function MemberList() {
         navigate('/edit-member/'+memberId)
     }
 
+    const addMember = () => {
+        navigate('/add-member')
+    }
+
     return (
         <div>
             <Typography variant='h4' style={style}>MemberList</Typography>
-            <a href='/add-member'>
-                <Button variant='contained' color='primary'> Add Member</Button>
-            </a> 
+                <Button variant='contained' color='primary' onClick={addMember}> Add Member</Button>
             <Table>
                 <TableHead>
                     <TableRow>
