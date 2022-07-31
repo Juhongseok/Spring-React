@@ -10,7 +10,7 @@ export default function EditMember() {
     const [salary, setSalary] = useState('');
     const [message, setMessage] = useState('')
 
-    useEffect(() => loadMember);
+    useEffect(() => loadMember, []);
 
     const loadMember = () => {
         ApiService.fetchMemberById(memberId)
@@ -40,9 +40,9 @@ export default function EditMember() {
             salary:salary
         }
 
-        ApiService.updateMember(updateMember)
+        ApiService.updateMember(member)
             .then(res => {
-                setMessage(member.memberId + '님 정보가 수정되었습니다.')
+                setMessage(member.id + '님 정보가 수정되었습니다.')
                 console.log(message)
             })
             .catch(error => {
