@@ -25,7 +25,7 @@ public class MemberController {
      * @return
      */
     @PostMapping("/member")
-    public ResponseData<String> addMember(@Validated @RequestBody SaveMemberRequest request) {
+    public ResponseData addMember(@Validated @RequestBody SaveMemberRequest request) {
         return SingleResponseData.of(memberService.saveMember(request));
     }
 
@@ -35,7 +35,7 @@ public class MemberController {
      * @return
      */
     @GetMapping("/members")
-    public ResponseData<MemberInfoResponse> getMemberList(){
+    public ResponseData getMemberList(){
         return ListResponseData.of(memberService.getMembers());
     }
 
@@ -45,7 +45,7 @@ public class MemberController {
      * @return
      */
     @GetMapping("/member/{memberId}")
-    public ResponseData<MemberInfoResponse> getMemberInfo(@PathVariable("memberId") String memberId){
+    public ResponseData getMemberInfo(@PathVariable("memberId") String memberId){
         return SingleResponseData.of(memberService.getMemberInfo(memberId));
     }
 
@@ -56,7 +56,7 @@ public class MemberController {
      * @return
      */
     @DeleteMapping("/member/{memberId}")
-    public ResponseData<String> deleteMember(@PathVariable("memberId") String memberId){
+    public ResponseData deleteMember(@PathVariable("memberId") String memberId){
         memberService.deleteMember(memberId);
         return SingleResponseData.of("ok");
     }
@@ -68,7 +68,7 @@ public class MemberController {
      * @return
      */
     @PatchMapping("/member/{memberId}")
-    public ResponseData<String> updateMember(@PathVariable("memberId") String memberId, @Validated @RequestBody UpdateMemberRequest request){
+    public ResponseData updateMember(@PathVariable("memberId") String memberId, @Validated @RequestBody UpdateMemberRequest request){
         request.setId(memberId);
         memberService.updateMember(request);
         return SingleResponseData.of("ok");
