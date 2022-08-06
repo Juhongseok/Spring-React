@@ -1,0 +1,5 @@
+[[Member-API]]
+== Member API
+
+=== Member Create
+operation::member/create[snippets='http-request,http-response,request-body,response-body,request-fields,response-fields']
