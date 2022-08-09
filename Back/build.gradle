@@ -48,12 +48,11 @@ asciidoctor {
 	inputs.dir snippetsDir
 }
 
-asciidoctor.doFirst {
-	delete file('src/main/resources/static/docs')
-}
-
 task copyDocument(type: Copy) {
 	dependsOn asciidoctor
+	doFirst{
+		delete file('src/main/resources/static/docs')
+	}
 	from file("build/docs/asciidoc")
 	into file("src/main/resources/static/docs")
 }
