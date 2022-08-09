@@ -1,5 +1,24 @@
 [[Member-API]]
 == Member API
 
+=== Common Response Data
+operation::member-controller-test/common[snippets='response-fields']
+
 === Member Create
-operation::member/create[snippets='http-request,http-response,request-body,response-body,request-fields,response-fields']
+operation::member-controller-test/sign_up[snippets='http-request,http-response,request-body,response-body,request-fields,response-fields']
+
+=== Member Find By ID
+operation::member-controller-test/get-member-info[snippets='http-request,http-response,response-body,response-fields-DATA']
+
+=== Members
+operation::member-controller-test/get-member-list[snippets='http-request,http-response,response-body,response-fields-data']
+
+[[asdf]]
+=== Return List<Object>
+include::{snippets}/member-controller-test/get-member-list/response-fields-data.adoc[]
+
+=== Member Update
+operation::member-controller-test/update-member[snippets='http-request,path-parameters,http-response,response-body,response-fields']
+
+=== Member Delete
+operation::member-controller-test/delete-member[snippets='http-request,path-parameters,http-response,response-body,response-fields']

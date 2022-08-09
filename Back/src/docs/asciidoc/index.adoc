@@ -4,7 +4,10 @@ Spring-React 공부
 :source-highlighter: highlightjs
 :toc: left
 :toc-title: API
-:toclevels: 3
+:toclevels: 2
 :sectlinks:
+
+== Error
+operation::member-controller-test/error[snippets='http-response,response-fields']
 
 include::{docfile}/../Member-Api.adoc[]

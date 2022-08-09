@@ -44,8 +44,8 @@ public class MemberController {
      * @param memberId
      * @return
      */
-    @GetMapping("/member/{memberId}")
-    public ResponseData getMemberInfo(@PathVariable("memberId") String memberId){
+    @GetMapping("/member")
+    public ResponseData getMemberInfo(@RequestParam("memberId") String memberId){
         return SingleResponseData.of(memberService.getMemberInfo(memberId));
     }
 
@@ -71,6 +71,11 @@ public class MemberController {
     public ResponseData updateMember(@PathVariable("memberId") String memberId, @Validated @RequestBody UpdateMemberRequest request){
         request.setId(memberId);
         memberService.updateMember(request);
+        return SingleResponseData.of("ok");
+    }
+
+    @GetMapping("/test")
+    public ResponseData test(){
         return SingleResponseData.of("ok");
     }
 }
