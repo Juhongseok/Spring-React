@@ -2,7 +2,7 @@ package com.jhs.manager.controller;
 
 import com.jhs.manager.controller.response.common.ListResponseData;
 import com.jhs.manager.controller.response.common.SingleResponseData;
-import com.jhs.manager.document.support.RestDocsTestSupport;
+import com.jhs.manager.document.support.AbstractRestDocsTests;
 import com.jhs.manager.service.MemberService;
 import com.jhs.manager.service.request.SaveMemberRequest;
 import com.jhs.manager.service.request.UpdateMemberRequest;
@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
 import org.springframework.restdocs.constraints.ConstraintDescriptions;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -19,21 +18,18 @@ import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.List;
 
-import static com.jhs.manager.document.config.RestDocsConfig.field;
+import static com.jhs.manager.document.support.DocumentFormatGenerator.field;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.attributes;
-import static org.springframework.restdocs.snippet.Attributes.key;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(MemberController.class)
-class MemberControllerTest extends RestDocsTestSupport {
+class MemberControllerTest extends AbstractRestDocsTests {
 
     @MockBean
     protected MemberService memberService;
@@ -58,7 +54,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         //then
         SingleResponseData responseData = SingleResponseData.of(response);
         action.andExpect(status().isOk())
-                .andExpect(content().json(createJson(responseData)))
+                .andExpect(content().json(toJson(responseData)))
                 .andExpect(jsonPath("$.data.memberId").exists())
                 .andDo(restDocs.document(
                         requestParameters(
@@ -83,17 +79,17 @@ class MemberControllerTest extends RestDocsTestSupport {
 
         //when
         ResultActions action = mockMvc.perform(post("/member")
-                .content(createJson(request))
+                .content(toJson(request))
                 .contentType(APPLICATION_JSON));
 
         SingleResponseData responseData = SingleResponseData.of(memberService.saveMember(request));
         //then
         action.andExpect(status().isOk())
-                .andExpect(content().json(createJson(responseData)))
+                .andExpect(content().json(toJson(responseData)))
                 .andExpect(jsonPath("$.data", is("ok")))
                 .andDo(restDocs.document(
                         requestFields(
-                                attributes(key("title").value("Fields for User Create")),
+                                attributes(field("title", "Fields for User Create")),
                                 fieldWithPath("id").description("user's id")
                                         .attributes(field("constraints", saveMemberRequestConstraints.descriptionsForProperty("id").toString())),
                                 fieldWithPath("name").description("user's name")
@@ -131,7 +127,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         //then
         SingleResponseData responseData = SingleResponseData.of(response);
         action.andExpect(status().isOk())
-                .andExpect(content().json(createJson(responseData)))
+                .andExpect(content().json(toJson(responseData)))
                 .andExpect(jsonPath("$.data.memberId").exists())
                 .andDo(restDocs.document(
                         requestParameters(
@@ -175,7 +171,7 @@ class MemberControllerTest extends RestDocsTestSupport {
         //then
         ListResponseData responseData = ListResponseData.of(list);
         action.andExpect(status().isOk())
-                .andExpect(content().json(createJson(responseData)))
+                .andExpect(content().json(toJson(responseData)))
                 .andExpect(jsonPath("$.data[0].memberId").exists())
                 .andDo(restDocs.document(
                         responseFields(
@@ -201,7 +197,7 @@ class MemberControllerTest extends RestDocsTestSupport {
 
         //then
         action.andExpect(status().isOk())
-                .andExpect(content().json(createJson(responseData)))
+                .andExpect(content().json(toJson(responseData)))
                 .andDo(restDocs.document(
                         pathParameters(
                                 parameterWithName("memberId").description("memberId")
@@ -226,13 +222,13 @@ class MemberControllerTest extends RestDocsTestSupport {
         //when
         ResultActions action = mockMvc.perform(RestDocumentationRequestBuilders.patch("/member/{memberId}", memberId)
                 .contentType(APPLICATION_JSON)
-                .content(createJson(request)));
+                .content(toJson(request)));
 
         SingleResponseData responseData = SingleResponseData.of("ok");
 
         //then
         action.andExpect(status().isOk())
-                .andExpect(content().json(createJson(responseData)))
+                .andExpect(content().json(toJson(responseData)))
                 .andDo(restDocs.document(
                         pathParameters(
                                 parameterWithName("memberId").description("memberId")
@@ -252,7 +248,7 @@ class MemberControllerTest extends RestDocsTestSupport {
 
         //when
         ResultActions action = mockMvc.perform(post("/member")
-                .content(createJson(request))
+                .content(toJson(request))
                 .contentType(APPLICATION_JSON));
 
         //then
