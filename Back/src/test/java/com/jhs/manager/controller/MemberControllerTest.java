@@ -173,6 +173,8 @@ class MemberControllerTest extends AbstractRestDocsTests {
         action.andExpect(status().isOk())
                 .andExpect(content().json(toJson(responseData)))
                 .andExpect(jsonPath("$.data[0].memberId").exists())
+                .andExpect(jsonPath("$.data[0].memberName").exists())
+                .andExpect(jsonPath("$.data[0].password").exists())
                 .andDo(restDocs.document(
                         responseFields(
                                 beneathPath("data").withSubsectionId("data"),
