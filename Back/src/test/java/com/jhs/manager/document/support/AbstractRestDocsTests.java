@@ -26,7 +26,7 @@ public abstract class AbstractRestDocsTests {
     protected RestDocumentationResultHandler restDocs;
 
     @Autowired
-    protected static ObjectMapper objectMapper;
+    protected ObjectMapper objectMapper;
 
     @Autowired
     protected MockMvc mockMvc;
@@ -41,7 +41,7 @@ public abstract class AbstractRestDocsTests {
                 .build();
     }
 
-    protected static String toJson(Object dto) throws JsonProcessingException {
+    protected String toJson(Object dto) throws JsonProcessingException {
         return objectMapper.writeValueAsString(dto);
     }
 }
